@@ -124,20 +124,19 @@ def main(unused_argv):
 	with open("sample.pkl", 'rb') as file:
 		sample = pickle.load(file)
 	# optimizer.clip_input(sample)
-	# print(sess.run(optimizer.grad)[0])
-	# quit()
-	image, _ = sess.run([optimizer.input, optimizer.optimize])
-	image = (image.reshape(28, 28) * 256).astype(np.uint8)
-	image = Image.fromarray(image)
-	image.resize((100, 100)).show()
+	# image, _ = sess.run([optimizer.input, optimizer.optimize])
+	# image = (image.reshape(28, 28) * 256).astype(np.uint8)
+	# image = Image.fromarray(image)
+	# image.resize((100, 100)).show()
 	prev_loss = None
 	for i in np.arange(2000):
 		image, _, loss = sess.run([optimizer.input, optimizer.optimize, optimizer.loss])
 		image = (image.reshape(28, 28) * 256).astype(np.uint8)
-		image = Image.fromarray(image)
-		scale = int((np.random.rand() - 0.5) * 28)
-		image.crop((scale, scale, 28-scale, 28-scale)).resize((28,28)).rotate(np.random.rand() * 10)
-		image = np.array(image) / 256.
+		# image = Image.fromarray(image)
+		# scale = int((np.random.rand() - 0.5) * 5)
+		# image.crop((scale, scale, 28-scale, 28-scale)).resize((28,28)).rotate(np.random.rand() * 10)
+		# image = np.array(image) / 256.
+		image = image / 256.
 		image = image.reshape(1, 28, 28, 1)
 		optimizer.clip_input(image)
 		if i % 100 == 0:

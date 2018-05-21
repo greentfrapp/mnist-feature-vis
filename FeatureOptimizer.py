@@ -81,9 +81,9 @@ class FeatureOptimizer(object):
 				inputs=dense,
 				units=10
 			)
-		# self.loss = -tf.reduce_sum(conv2[:, :, :, 0])
+		self.loss = -tf.reduce_sum(conv1[:, :, :, 0])
 		# self.loss = -tf.reduce_sum(pool2_flat[0])
-		self.loss = -logits[:, 0]
+		# self.loss = -logits[:, 0]
 		self.grad = tf.gradients(self.loss, self.input)
 		self.optimize = tf.train.GradientDescentOptimizer(learning_rate=1e-3).minimize(self.loss, var_list=[self.input])
 		self.predictions = tf.argmax(input=logits, axis=1)
@@ -136,7 +136,7 @@ def main(unused_argv):
 		image = (image.reshape(28, 28) * 256).astype(np.uint8)
 		image = Image.fromarray(image)
 		scale = int((np.random.rand() - 0.5) * 28)
-		image.crop((scale, scale, 28-scale, 28-scale)).resize((28,28)).rotate(np.random.rand() * 180)
+		image.crop((scale, scale, 28-scale, 28-scale)).resize((28,28)).rotate(np.random.rand() * 10)
 		image = np.array(image) / 256.
 		image = image.reshape(1, 28, 28, 1)
 		optimizer.clip_input(image)
